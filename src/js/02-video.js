@@ -1,14 +1,19 @@
+import throttle from 'lodash.throttle';
 import Player from '@vimeo/player';
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-player.on('timeupdate', function () {
-  console.log('played the video!');
-  player.getCurrentTime().then(function (currentTime) {
-    localStorage.setItem('videoplayer-current-time', currentTime);
-  });
-});
+player.on(
+  'timeupdate',
+  throttle(function () {
+    console.log('played the video!');
+    player.getCurrentTime().then(function (currentTime) {
+      console.log('played slow the video!');
+      localStorage.setItem('videoplayer-current-time', currentTime);
+    });
+  }, 1000)
+);
 
 player
   .setCurrentTime(localStorage.getItem(`videoplayer-current-time`))
