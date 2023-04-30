@@ -6,12 +6,12 @@ const player = new Player(iframe);
 player.on('timeupdate', function () {
   console.log('played the video!');
   player.getCurrentTime().then(function (currentTime) {
-    localStorage.setItem('currentTime', currentTime);
+    localStorage.setItem('videoplayer-current-time', currentTime);
   });
 });
 
 player
-  .setCurrentTime(localStorage.getItem(`currentTime`))
+  .setCurrentTime(localStorage.getItem(`videoplayer-current-time`))
   .then(function (seconds) {
     // seconds = the actual time that the player seeked to
   })
@@ -26,10 +26,7 @@ player
         break;
     }
   });
-console.log(
-  `localStorage.getItem.currentTime`,
-  localStorage.getItem(`currentTime`)
-);
+
 player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
