@@ -26,7 +26,11 @@ function autocompleteInputFromLocalStorage() {
   const dataInputs = localStorage.getItem('feedback-form-state');
   if (dataInputs) {
     const inputArray = JSON.parse(dataInputs);
-    refs.email.value = inputArray.email;
-    refs.feedback.value = inputArray.message;
+    if (inputArray.hasOwnProperty('email')) {
+      refs.email.value = inputArray.email;
+    }
+    if (inputArray.hasOwnProperty('message')) {
+      refs.feedback.value = inputArray.message;
+    }
   }
 }
