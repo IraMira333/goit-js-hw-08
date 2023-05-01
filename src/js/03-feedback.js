@@ -25,7 +25,7 @@ function onFeedbackFormInput(evt) {
 function autocompleteInputFromLocalStorage() {
   const dataInputs = localStorage.getItem('feedback-form-state');
   if (dataInputs) {
-    const inputArray = JSON.parse(localStorage.getItem('feedback-form-state'));
+    const inputArray = JSON.parse(dataInputs);
     refs.email.value = inputArray.email;
     refs.feedback.value = inputArray.message;
     console.log(inputArray);
