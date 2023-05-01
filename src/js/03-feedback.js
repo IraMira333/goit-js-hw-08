@@ -2,8 +2,8 @@ import throttle from 'lodash.throttle';
 
 const refs = {
   form: document.querySelector(`.feedback-form`),
-  email: document.getElementsByName(`email`),
-  feedback: document.getElementsByName(`message`),
+  email: document.querySelector(`[name="email"]`),
+  feedback: document.querySelector(`[name="message"]`),
 };
 autocompleteInputFromLocalStorage();
 const feedbackData = {};
@@ -28,9 +28,5 @@ function autocompleteInputFromLocalStorage() {
     const inputArray = JSON.parse(dataInputs);
     refs.email.value = inputArray.email;
     refs.feedback.value = inputArray.message;
-    console.log(inputArray);
-
-    console.log(inputArray.email);
-    console.log(refs.feedback.value);
   }
 }
