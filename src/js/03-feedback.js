@@ -8,7 +8,7 @@ const refs = {
 autocompleteInputFromLocalStorage();
 const feedbackData = {};
 refs.form.addEventListener('submit', onFormSubmit);
-refs.form.addEventListener('input', throttle(onFeedbackFormInput, 1000));
+refs.form.addEventListener('input', throttle(onFeedbackFormInput, 500));
 
 function onFormSubmit(evt) {
   evt.preventDefault();
@@ -30,7 +30,7 @@ function autocompleteInputFromLocalStorage() {
     refs.feedback.value = inputArray.message;
     console.log(inputArray);
 
-    console.log(refs.email.value);
+    console.log(inputArray.email);
     console.log(refs.feedback.value);
   }
 }
