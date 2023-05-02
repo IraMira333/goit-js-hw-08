@@ -5,32 +5,40 @@ const refs = {
   email: document.querySelector(`[name="email"]`),
   feedback: document.querySelector(`[name="message"]`),
 };
+const STORAGE_KEY = 'feedback-form-state';
+
 autocompleteInputFromLocalStorage();
-const feedbackData = {};
+
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(onFeedbackFormInput, 500));
 
 function onFormSubmit(evt) {
   evt.preventDefault();
+  if (refs.email.value.trim() === '' || refs.feedback.value.trim() === '') {
+    alert('Заповніть всі поля форми!');
+    return;
+  }
   evt.currentTarget.reset();
-  console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
-  localStorage.removeItem('feedback-form-state');
+  console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
+  localStorage.removeItem(STORAGE_KEY);
 }
 
 function onFeedbackFormInput(evt) {
+  let feedbackData = localStorage.getItem(STORAGE_KEY);
+  if (feedbackData) {
+    feedbackData = JSON.parse(feedbackData);
+  } else {
+    feedbackData = {};
+  }
   feedbackData[evt.target.name] = evt.target.value;
-  localStorage.setItem('feedback-form-state', JSON.stringify(feedbackData));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(feedbackData));
 }
 
 function autocompleteInputFromLocalStorage() {
-  const dataInputs = localStorage.getItem('feedback-form-state');
+  const dataInputs = localStorage.getItem(STORAGE_KEY);
   if (dataInputs) {
     const inputArray = JSON.parse(dataInputs);
-    if (inputArray.hasOwnProperty('email')) {
-      refs.email.value = inputArray.email;
-    }
-    if (inputArray.hasOwnProperty('message')) {
-      refs.feedback.value = inputArray.message;
-    }
+    refs.email.value = inputArray.email ? inputArray.email : '';
+    refs.feedback.value = inputArray.message ? inputArray.message : '';
   }
 }
