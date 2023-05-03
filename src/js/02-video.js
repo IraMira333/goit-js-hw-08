@@ -4,18 +4,10 @@ import Player from '@vimeo/player';
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-player.on(
-  'timeupdate',
-  throttle(function () {
-    player.getCurrentTime(currentTime);
-    localStorage.setItem('videoplayer-current-time', currentTime);
-  }, 1000)
-);
-if (localStorage.getItem(`videoplayer-current-time`)) {
-  console.log(`Відео вже почали дивитись`);
-  player.setCurrentTime(localStorage.getItem(`videoplayer-current-time`));
-}
+player.on('timeupdate', throttle(playedTimeTracker, 1000));
 
-player.getVideoTitle().then(function (title) {
-  console.log('title:', title);
-});
+player.setCurrentTime(localStorage.getItem('videoplayer-current-time') || 0);
+
+function playedTimeTracker(currentTime) {
+  localStorage.setItem('videoplayer-current-time', currentTime.seconds);
+}
